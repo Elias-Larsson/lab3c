@@ -10,6 +10,6 @@ struct lakemedel {
 };
 typedef struct lakemedel Lakemedel;
 
-void registreraLakemedel(FILE *fp);
-
+void registreraLakemedel();
+void skrivUtLakemedel();
 #endif

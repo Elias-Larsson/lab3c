@@ -22,7 +22,10 @@ int main(void){
     scanf("%d",&menuInput);
     switch (menuInput) {
         case 1: 
-            registreraLakemedel(fp);
+            registreraLakemedel();
+        // break;
+        case 2:
+            skrivUtLakemedel();
         break;
 
     }

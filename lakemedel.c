@@ -1,15 +1,12 @@
 #include "lakemedel.h"
-#include "repository.h"
 #include <stdbool.h>
 #include <stdio.h>
 #include <string.h>
 
-typedef struct lakemedel Lakemedel ;
-
 Lakemedel lakemedelsregister[ARRAY_SIZE];
 int registerIndex = 0;
 
-void registreraLakemedel(FILE *fp) {
+void registreraLakemedel() {
     Lakemedel *l = &lakemedelsregister[registerIndex];
 
     printf("registrera lakemedel \n");
@@ -22,20 +19,18 @@ void registreraLakemedel(FILE *fp) {
         if(l->storlek[i] == 0) {
             break;
         }
-        
     }
-
-    bool resultat = skrivLakemedel(fp, l);
-    if(!resultat) {
-        printf("error vid registrering av läkemedel till textfil"); 
-    }
-    
-    // använd på meny 2
-    // for (int i = 0; i < ARRAY_SIZE; i++) {
-    //     l->storlek[i] = storlek[i];
-    //     if(l->storlek[i] > 0) {
-    //         printf("%d ", l->storlek[i]);
-    //     }
-    // }
     registerIndex++;
 };
+
+void skrivUtLakemedel() {    
+    for(int i = 0; i < registerIndex; i++) {
+        printf("%s ", lakemedelsregister[i].namn);
+        for(int j = 0; j < ARRAY_SIZE; j++) {
+            if(lakemedelsregister[i].storlek[j] == 0) {
+                break;
+            }
+            printf("%d ", lakemedelsregister[i].storlek[j]);
+        }
+    }
+}
