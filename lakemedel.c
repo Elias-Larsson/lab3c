@@ -6,12 +6,29 @@
 Lakemedel lakemedelsregister[ARRAY_SIZE];
 int registerIndex = 0;
 
+bool lakemedelSök(char ord[]) {
+    for(int i = 0; i < registerIndex; i++) {
+        if(!strcmp(ord, lakemedelsregister[i].namn)) {
+            printf("Lakemedlet finns redan \n");
+            return true;
+        }
+    }
+    return false;
+}
+
 void registreraLakemedel() {
     Lakemedel *l = &lakemedelsregister[registerIndex];
 
     printf("registrera lakemedel \n");
     printf("Ange namn: ");
-    scanf("%99s", l->namn);
+    bool result = true;
+    char namn[100];
+    while(result == true) {
+        scanf("%s", namn);
+        result = lakemedelSök(namn);
+        
+    }
+    strcpy(l->namn, namn);
     
     for(int i = 0; i < ARRAY_SIZE; i++) {
         printf("Ange storlek (0 för att avsluta): ");
