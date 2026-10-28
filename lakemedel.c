@@ -3,7 +3,7 @@
 #include <stdio.h>
 #include <string.h>
 
-Medicine medicineRegister[ARRAY_SIZE];
+Medicine medicineRegister[ARRAY_SIZE] = {0};
 int registerSize = 0;
 
 bool medicineSearch(char name[]) {
@@ -52,3 +52,23 @@ void printMedicineRegister() {
     }
 }
 
+void writeMedicineRegister(FILE *fp) {
+    char name[ARRAY_SIZE];
+    for (int i = 0; i < registerSize; i++) {
+        if (medicineRegister[i].name[0] == '\0') break;
+        fprintf(fp, "%s ", medicineRegister[i].name);
+        
+        for(int j = 0; j < ARRAY_SIZE; j++) {
+            if (medicineRegister[i].size[j] == 0) break;
+            
+            fprintf(
+                fp, 
+                "%d %d ",
+                medicineRegister[i].size[j],
+                medicineRegister[i].stock[j]
+            );
+        }
+        fprintf(fp, "\n");
+    }
+    fclose(fp);
+}

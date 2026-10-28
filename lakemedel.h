@@ -12,4 +12,6 @@ typedef struct medicine Medicine;
 
 void addMedicine();
 void printMedicineRegister();
+void writeMedicineRegister(FILE *fp);
+
 #endif

@@ -31,7 +31,5 @@ int main(void){
             break;
         }
     }   
-        fp = fopen(file, "w");
-        
-        fclose(fp); //skriv och stäng till lakemedel.txt
+        writeMedicineRegister(fp);
 }
