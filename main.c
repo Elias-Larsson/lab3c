@@ -18,18 +18,21 @@ int main(void){
     
     fp = fopen(file, "w");
     while(1==1) {
-        printf("(1) Registrera nytt lakemedel \n (2) Skriva ut alla lakemedel \n "
+        printf(" (1) Registrera nytt lakemedel \n (2) Skriva ut alla lakemedel \n "
                "(3) Soka efter lakemedel \n (4) Lagg till storlekar \n (5) Andra "
                "lagersaldot för ett lakemedel \n (6) Avregistrera lakemedel \n (7) "
                "Varningar \n (8) Avsluta \n");
         scanf("%d",&menuInput);
+        
         if(menuInput == 8) break;
         switch (menuInput) {
-            case 1: addMedicine();
+            case 1: handleAddMedicine();
             break;
-            case 2: printMedicineRegister();
+            case 2: handlePrintMedicine();
+            break;
+            case 3: handlePartialSearch();
             break;
         }
     }   
-        writeMedicineRegister(fp);
+        writeMedicineToFile(fp);
 }

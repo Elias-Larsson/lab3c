@@ -10,8 +10,8 @@ struct medicine {
 };
 typedef struct medicine Medicine;
 
-void addMedicine();
-void printMedicineRegister();
-void writeMedicineRegister(FILE *fp);
-
+void handleAddMedicine();
+void handlePrintMedicine();
+void writeMedicineToFile(FILE *fp);
+void handlePartialSearch();
 #endif
