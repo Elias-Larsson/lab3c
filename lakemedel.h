@@ -3,13 +3,13 @@
 #include <stdio.h>
 #define ARRAY_SIZE 100
 
-struct lakemedel {
-    int saldo[ARRAY_SIZE];
-    int storlek[ARRAY_SIZE];
-    char namn[ARRAY_SIZE];
+struct medicine {
+    int stock[ARRAY_SIZE];
+    int size[ARRAY_SIZE];
+    char name[ARRAY_SIZE];
 };
-typedef struct lakemedel Lakemedel;
+typedef struct medicine Medicine;
 
-void registreraLakemedel();
-void skrivUtLakemedel();
+void addMedicine();
+void printMedicineRegister();
 #endif

@@ -3,12 +3,12 @@
 #include <stdio.h>
 #include <string.h>
 
-Lakemedel lakemedelsregister[ARRAY_SIZE];
-int registerIndex = 0;
+Medicine medicineRegister[ARRAY_SIZE];
+int registerSize = 0;
 
-bool lakemedelSök(char ord[]) {
-    for(int i = 0; i < registerIndex; i++) {
-        if(!strcmp(ord, lakemedelsregister[i].namn)) {
+bool medicineSearch(char name[]) {
+    for(int i = 0; i < registerSize; i++) {
+        if(!strcmp(name, medicineRegister[i].name)) {
             printf("Lakemedlet finns redan \n");
             return true;
         }
@@ -16,38 +16,39 @@ bool lakemedelSök(char ord[]) {
     return false;
 }
 
-void registreraLakemedel() {
-    Lakemedel *l = &lakemedelsregister[registerIndex];
+void addMedicine() {
+    Medicine *medicine = &medicineRegister[registerSize];
 
     printf("registrera lakemedel \n");
-    printf("Ange namn: ");
+    printf("Ange namn: \n");
     bool result = true;
-    char namn[100];
+    char name[100];
     while(result == true) {
-        scanf("%s", namn);
-        result = lakemedelSök(namn);
+        scanf("%s", name);
+        result = medicineSearch(name);
         
     }
-    strcpy(l->namn, namn);
+    strcpy(medicine->name, name);
     
     for(int i = 0; i < ARRAY_SIZE; i++) {
         printf("Ange storlek (0 för att avsluta): ");
-        scanf("%d", &l->storlek[i]);
-        if(l->storlek[i] == 0) {
+        scanf("%d", &medicine->size[i]);
+        if(medicine->size[i] == 0) {
             break;
         }
     }
-    registerIndex++;
+    registerSize++;
 };
 
-void skrivUtLakemedel() {    
-    for(int i = 0; i < registerIndex; i++) {
-        printf("%s ", lakemedelsregister[i].namn);
+void printMedicineRegister() {    
+    for(int i = 0; i < registerSize; i++) {
+        printf("%s ", medicineRegister[i].name);
+        
         for(int j = 0; j < ARRAY_SIZE; j++) {
-            if(lakemedelsregister[i].storlek[j] == 0) {
-                break;
-            }
-            printf("%d ", lakemedelsregister[i].storlek[j]);
+            if(medicineRegister[i].size[j] == 0) break;
+            printf("%d ", medicineRegister[i].size[j]);
         }
+        printf("\n");
     }
 }
+
