@@ -32,13 +32,50 @@ bool medicinePartialSearch(char query[ARRAY_SIZE], int i) {
     return false;
 }
 
+void handleAddSizes() {
+    char query[ARRAY_SIZE];
+    int i, count, medicineIndex;
+    
+    printf("Lagg till storlekar \n");
+    while(1) {
+        printf("Ange sokstrang:");
+        scanf("%99s", query);
+        printf("Lakemedel Storlekar Saldo\n");
+        printf("_________________________\n");
+
+        count = 0;
+        for(i = 0; i < registerSize; i++) {
+            if(medicinePartialSearch(query, i)) {
+                printMedicine(i); 
+                medicineIndex = i;
+                count++;
+            }
+        }
+        if(count==1) break; else printf("Du fick inte endast ett alternativ. Vanligen gor en ny sokning. \n");
+    }
+    
+    int j;
+    int newSize;
+    
+    while(j < ARRAY_SIZE && medicineRegister[medicineIndex].size[j] != 0) j++;
+    
+    while(j < ARRAY_SIZE) {
+        printf("Ange ny storlek: "); 
+        scanf("%d", &newSize);
+        if(newSize == 0) break;
+      
+        medicineRegister[medicineIndex].size[j] = newSize;
+        j++;
+    }
+}
+
 void handlePartialSearch() {
     char query[ARRAY_SIZE];
     
     printf("Sok lakemedel \n");
     printf("Ange sokstrang: ");
     scanf("%s", query);
-    int matchedIndex[ARRAY_SIZE];
+    
     printf("Lakemedel Storlekar Saldo\n");
     printf("_________________________\n");
     

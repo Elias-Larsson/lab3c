@@ -13,5 +13,6 @@ typedef struct medicine Medicine;
 void handleAddMedicine();
 void handlePrintMedicine();
 void writeMedicineToFile(FILE *fp);
+void handleAddSizes();
 void handlePartialSearch();
 #endif

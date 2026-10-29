@@ -32,6 +32,8 @@ int main(void){
             break;
             case 3: handlePartialSearch();
             break;
+            case 4: handleAddSizes();
+            break;
         }
     }   
         writeMedicineToFile(fp);
