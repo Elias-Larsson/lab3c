@@ -9,7 +9,7 @@ int registerSize = 0;
 void printMedicine(int i) {
     printf("%s ", medicineRegister[i].name);
     
-    for(int j = 0; j < ARRAY_SIZE; j++) {
+    for(int j = 0; j < MEDICINE_SIZE; j++) {
         if(medicineRegister[i].size[j] == 0) break;
         printf("%d ", medicineRegister[i].size[j]);
     }
@@ -32,6 +32,22 @@ bool medicinePartialSearch(char query[ARRAY_SIZE], int i) {
     return false;
 }
 
+int searchMedicineIndex(char query[]) {
+    int i, count = 0;
+    int medicineIndex;
+    
+    printf("Lakemedel         Storlekar         Saldo\n");
+    printf("_________________________________________\n");
+    for(i = 0; i < registerSize; i++) {
+        if(medicinePartialSearch(query, i)) {
+            printMedicine(i); 
+            medicineIndex = i;
+            count++;
+        }
+    }
+    if(count==1) return medicineIndex; else return -1;
+}
+
 void handleAddSizes() {
     char query[ARRAY_SIZE];
     int i, count, medicineIndex;
@@ -40,26 +56,17 @@ void handleAddSizes() {
     while(1) {
         printf("Ange sokstrang:");
         scanf("%99s", query);
-        printf("Lakemedel Storlekar Saldo\n");
-        printf("_________________________\n");
 
-        count = 0;
-        for(i = 0; i < registerSize; i++) {
-            if(medicinePartialSearch(query, i)) {
-                printMedicine(i); 
-                medicineIndex = i;
-                count++;
-            }
-        }
-        if(count==1) break; else printf("Du fick inte endast ett alternativ. Vanligen gor en ny sokning. \n");
+        medicineIndex = searchMedicineIndex(query);
+        if(medicineIndex != -1) break; else printf("Du fick inte endast ett alternativ. Vanligen gor en ny sokning.\n");
     }
     
     int j;
     int newSize;
     
-    while(j < ARRAY_SIZE && medicineRegister[medicineIndex].size[j] != 0) j++;
+    while(j < MEDICINE_SIZE && medicineRegister[medicineIndex].size[j] != 0) j++;
     
-    while(j < ARRAY_SIZE) {
+    while(j < MEDICINE_SIZE) {
         printf("Ange ny storlek: "); 
         scanf("%d", &newSize);
         if(newSize == 0) break;
@@ -100,7 +107,7 @@ void handleAddMedicine() {
     }
     strcpy(medicine->name, name);
     
-    for(int i = 0; i < ARRAY_SIZE; i++) {
+    for(int i = 0; i < MEDICINE_SIZE; i++) {
         printf("Ange storlek (0 för att avsluta): ");
         scanf("%d", &medicine->size[i]);
         if(medicine->size[i] == 0) {
