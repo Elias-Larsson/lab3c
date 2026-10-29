@@ -32,47 +32,43 @@ bool medicinePartialSearch(char query[ARRAY_SIZE], int i) {
     return false;
 }
 
-int searchMedicineIndex(char query[]) {
-    int i, count = 0;
-    int medicineIndex;
-    
-    printf("Lakemedel         Storlekar         Saldo\n");
-    printf("_________________________________________\n");
-    for(i = 0; i < registerSize; i++) {
-        if(medicinePartialSearch(query, i)) {
-            printMedicine(i); 
-            medicineIndex = i;
-            count++;
-        }
-    }
-    if(count==1) return medicineIndex; else return -1;
-}
-
-void handleAddSizes() {
+int searchMedicineIndex() {
+    int i, medicineIndex, count = 0;
     char query[ARRAY_SIZE];
-    int i, count, medicineIndex;
-    
+
     printf("Lagg till storlekar \n");
     while(1) {
         printf("Ange sokstrang:");
         scanf("%99s", query);
 
-        medicineIndex = searchMedicineIndex(query);
-        if(medicineIndex != -1) break; else printf("Du fick inte endast ett alternativ. Vanligen gor en ny sokning.\n");
+        printf("Lakemedel         Storlekar         Saldo\n");
+        printf("_________________________________________\n");
+        for(i = 0; i < registerSize; i++) {
+            if(medicinePartialSearch(query, i)) {
+                printMedicine(i); 
+                medicineIndex = i;
+                count++;
+            }
+        }
+        if(count == 1) break; else printf("Du fick inte endast ett alternativ. Vanligen gor en ny sokning.\n");
     }
+    return medicineIndex;
+}
+
+void handleAddSizes() {
+    int newSize, medicineIndex, i;
     
-    int j;
-    int newSize;
+    medicineIndex = searchMedicineIndex();
     
-    while(j < MEDICINE_SIZE && medicineRegister[medicineIndex].size[j] != 0) j++;
+    while(i < MEDICINE_SIZE && medicineRegister[medicineIndex].size[i] != 0) i++;
     
-    while(j < MEDICINE_SIZE) {
+    while(i < MEDICINE_SIZE) {
         printf("Ange ny storlek: "); 
         scanf("%d", &newSize);
         if(newSize == 0) break;
       
-        medicineRegister[medicineIndex].size[j] = newSize;
-        j++;
+        medicineRegister[medicineIndex].size[i] = newSize;
+        i++;
     }
 }
 
