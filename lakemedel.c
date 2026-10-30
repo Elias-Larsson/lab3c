@@ -12,7 +12,6 @@ void addSizes(Medicine *medicine) {
     while (i < MEDICINE_SIZE) {
         printf("Ange storlek (0 för att avsluta): ");
         scanf("%d", &medicine->sizes[medicine->sizesCount]);
-        printf("count: %d",  medicine->sizesCount);
         if(medicine->sizes[medicine->sizesCount] == 0) break;
         
         medicine->sizesCount++;
@@ -68,16 +67,27 @@ int searchMedicineIndex() {
     return medicineIndex;
 }
 
-// void handleAdjustStock() {
-//     int medicineIndex;
-//     
-//     printf("Lagg till storlekar \n");
-//     medicineIndex = searchMedicineIndex();
-//     while(medicineRegister[medicineIndex].)
-// }
+void handleAdjustStock() {
+    int medicineIndex, adjustment, i = 0;
+    
+    printf("Lagg till storlekar \n");
+    medicineIndex = searchMedicineIndex();
+    
+    Medicine *medicine = &medicines[medicineIndex];
+    for(i = 0; i < medicine->sizesCount; i++) {
+        printf("Ange andring (+/-) for storlek %d: ", medicine->sizes[i]);
+        scanf("%d", &adjustment);
+        printf("saldo: %d \n", medicine->stock[i]);
+        if(medicine->stock[i] + adjustment < 0 ) {
+            printf("VARNING finns endast %d satter saldo till 0. \n", medicine->stock[i]);
+            medicine->stock[i] = 0;
+        } else medicines->stock[i] += adjustment;
+        printf("ny saldo: %d \n", medicines->stock[i]);
+    } 
+}
 
 void handleAddSizes() {
-    int newSize, medicineIndex;
+    int medicineIndex;
     
     printf("Lagg till storlekar \n");
     medicineIndex = searchMedicineIndex();

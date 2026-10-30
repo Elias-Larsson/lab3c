@@ -34,8 +34,8 @@ int main(void){
             break;
             case 4: handleAddSizes();
             break;
-            // case 5: handleAdjustStock();
-            // break;
+            case 5: handleAdjustStock();
+            break;
         }
     }   
         writeMedicineToFile(fp);

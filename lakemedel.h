@@ -5,7 +5,7 @@
 #define MEDICINE_SIZE 10
 
 struct medicine {
-    int stock[ARRAY_SIZE];
+    int stock[MEDICINE_SIZE];
     int sizes[MEDICINE_SIZE];
     int sizesCount;
     char name[ARRAY_SIZE];
@@ -16,6 +16,6 @@ void handleAddMedicine();
 void handlePrintMedicine();
 void writeMedicineToFile(FILE *fp);
 void handleAddSizes();
-// void handleAdjustStock();
+void handleAdjustStock();
 void handlePartialSearch();
 #endif
