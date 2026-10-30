@@ -19,13 +19,23 @@ void addSizes(Medicine *medicine) {
     }
 }
 
-void printMedicine(int i) {
-    printf("%s ", medicines[i].name);
+void printMedicine(Medicine *medicine) {
+    int i = 0;
     
-    for(int j = 0; j < MEDICINE_SIZE; j++) {
-        if(medicines[i].sizes[j] == 0) break;
-        printf("%d ", medicines[i].sizes[j]);
+    printf("%-16s %-16s %s \n", "Lakemedel", "Storlekar", "Saldo");
+    printf("_________________________________________\n");  
+    printf("%-16s ", medicine->name);
+    while(medicine->sizesCount > i) {
+        printf("%d, ", medicine->sizes[i]);
+        i++;
     }
+    printf("%4s", " ");
+    i = 0;
+    while(medicine->sizesCount > i) {
+        printf("%d, ", medicine->stock[i]);
+        i++;
+    }
+    printf("%10s", " ");
     printf("\n");
 }
 
@@ -57,7 +67,7 @@ int searchMedicineIndex() {
         printf("_________________________________________\n");
         for(i = 0; i < registerSize; i++) {
             if(medicinePartialSearch(query, i)) {
-                printMedicine(i); 
+                printMedicine(&medicines[i]); 
                 medicineIndex = i;
                 count++;
             }
@@ -106,7 +116,7 @@ void handlePartialSearch() {
     printf("_________________________\n");
     
     for(int i = 0; i < registerSize; i++) {
-        if(medicinePartialSearch(query, i)) printMedicine(i);
+        if(medicinePartialSearch(query, i)) printMedicine(&medicines[i]);
     }
 }
 
@@ -129,9 +139,9 @@ void handleAddMedicine() {
     registerSize++;
 };
 
-void handlePrintMedicine() {    
+void handlePrintMedicine() {  
     for(int i = 0; i < registerSize; i++) {
-        printMedicine(i);
+        printMedicine(&medicines[i]);
     }
 }
 
