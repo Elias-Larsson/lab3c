@@ -17,12 +17,12 @@ int main(void){
     } else fclose(fp);
     
     fp = fopen(file, "w");
-    while(1==1) {
+    while(1) {
         printf(" (1) Registrera nytt lakemedel \n (2) Skriva ut alla lakemedel \n "
                "(3) Soka efter lakemedel \n (4) Lagg till storlekar \n (5) Andra "
                "lagersaldot för ett lakemedel \n (6) Avregistrera lakemedel \n (7) "
                "Varningar \n (8) Avsluta \n");
-        scanf("%d",&menuInput);
+        scanf("%d", &menuInput);
         
         if(menuInput == 8) break;
         switch (menuInput) {
@@ -34,6 +34,8 @@ int main(void){
             break;
             case 4: handleAddSizes();
             break;
+            // case 5: handleAdjustStock();
+            // break;
         }
     }   
         writeMedicineToFile(fp);

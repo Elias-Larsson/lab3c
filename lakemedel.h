@@ -6,7 +6,8 @@
 
 struct medicine {
     int stock[ARRAY_SIZE];
-    int size[MEDICINE_SIZE];
+    int sizes[MEDICINE_SIZE];
+    int sizesCount;
     char name[ARRAY_SIZE];
 };
 typedef struct medicine Medicine;
@@ -15,5 +16,6 @@ void handleAddMedicine();
 void handlePrintMedicine();
 void writeMedicineToFile(FILE *fp);
 void handleAddSizes();
+// void handleAdjustStock();
 void handlePartialSearch();
 #endif

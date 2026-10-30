@@ -3,22 +3,36 @@
 #include <stdio.h>
 #include <string.h>
 
-Medicine medicineRegister[ARRAY_SIZE] = {0};
+Medicine medicines[ARRAY_SIZE] = {0};
 int registerSize = 0;
 
+void addSizes(Medicine *medicine) {
+    int i = 0;
+    
+    while (i < MEDICINE_SIZE) {
+        printf("Ange storlek (0 för att avsluta): ");
+        scanf("%d", &medicine->sizes[medicine->sizesCount]);
+        printf("count: %d",  medicine->sizesCount);
+        if(medicine->sizes[medicine->sizesCount] == 0) break;
+        
+        medicine->sizesCount++;
+        i++;
+    }
+}
+
 void printMedicine(int i) {
-    printf("%s ", medicineRegister[i].name);
+    printf("%s ", medicines[i].name);
     
     for(int j = 0; j < MEDICINE_SIZE; j++) {
-        if(medicineRegister[i].size[j] == 0) break;
-        printf("%d ", medicineRegister[i].size[j]);
+        if(medicines[i].sizes[j] == 0) break;
+        printf("%d ", medicines[i].sizes[j]);
     }
     printf("\n");
 }
 
 bool medicineSearch(char query[]) {
     for(int i = 0; i < registerSize; i++) {
-        if(!strcmp(query, medicineRegister[i].name)) {
+        if(!strcmp(query, medicines[i].name)) {
             return true;
         }
     }
@@ -26,7 +40,7 @@ bool medicineSearch(char query[]) {
 }
 
 bool medicinePartialSearch(char query[ARRAY_SIZE], int i) {
-    if(strstr(medicineRegister[i].name, query) != NULL) {
+    if(strstr(medicines[i].name, query) != NULL) {
         return true;
     }
     return false;
@@ -36,7 +50,6 @@ int searchMedicineIndex() {
     int i, medicineIndex, count = 0;
     char query[ARRAY_SIZE];
 
-    printf("Lagg till storlekar \n");
     while(1) {
         printf("Ange sokstrang:");
         scanf("%99s", query);
@@ -55,21 +68,21 @@ int searchMedicineIndex() {
     return medicineIndex;
 }
 
+// void handleAdjustStock() {
+//     int medicineIndex;
+//     
+//     printf("Lagg till storlekar \n");
+//     medicineIndex = searchMedicineIndex();
+//     while(medicineRegister[medicineIndex].)
+// }
+
 void handleAddSizes() {
-    int newSize, medicineIndex, i;
+    int newSize, medicineIndex;
     
+    printf("Lagg till storlekar \n");
     medicineIndex = searchMedicineIndex();
-    
-    while(i < MEDICINE_SIZE && medicineRegister[medicineIndex].size[i] != 0) i++;
-    
-    while(i < MEDICINE_SIZE) {
-        printf("Ange ny storlek: "); 
-        scanf("%d", &newSize);
-        if(newSize == 0) break;
-      
-        medicineRegister[medicineIndex].size[i] = newSize;
-        i++;
-    }
+        
+    addSizes(&medicines[medicineIndex]);
 }
 
 void handlePartialSearch() {
@@ -88,12 +101,11 @@ void handlePartialSearch() {
 }
 
 void handleAddMedicine() {
-    Medicine *medicine = &medicineRegister[registerSize];
-
-    printf("Registrera lakemedel \n");
     bool result = true;
     char name[100];
-    while(result == true) {
+    
+    printf("Registrera lakemedel \n");
+    while(result) {
         printf("Ange namn: ");
         scanf("%s", name);
         result = medicineSearch(name);
@@ -101,15 +113,9 @@ void handleAddMedicine() {
             printf("Lakemedlet finns redan \n");
         }
     }
-    strcpy(medicine->name, name);
+    strcpy(medicines[registerSize].name, name);
     
-    for(int i = 0; i < MEDICINE_SIZE; i++) {
-        printf("Ange storlek (0 för att avsluta): ");
-        scanf("%d", &medicine->size[i]);
-        if(medicine->size[i] == 0) {
-            break;
-        }
-    }
+    addSizes(&medicines[registerSize]);
     registerSize++;
 };
 
@@ -123,16 +129,16 @@ void writeMedicineToFile(FILE *fp) {
     char name[ARRAY_SIZE];
     
     for (int i = 0; i < registerSize; i++) {
-        if (medicineRegister[i].name[0] == '\0') break;
-        fprintf(fp, "%s ", medicineRegister[i].name);
+        if (medicines[i].name[0] == '\0') break;
+        fprintf(fp, "%s ", medicines[i].name);
         
         for(int j = 0; j < ARRAY_SIZE; j++) {
-            if (medicineRegister[i].size[j] == 0) break; 
+            if (medicines[i].sizes[j] == 0) break; 
             fprintf(
                 fp, 
                 "%d %d ",
-                medicineRegister[i].size[j],
-                medicineRegister[i].stock[j]
+                medicines[i].sizes[j],
+                medicines[i].stock[j]
             );
         }
         fprintf(fp, "\n");
