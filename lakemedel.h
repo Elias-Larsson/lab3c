@@ -16,4 +16,5 @@ void handlePrintMedicine(Medicine medicines[ARRAY_SIZE], int registerSize);
 void handleAddSizes(Medicine medicines[ARRAY_SIZE], int registerSize);
 void handleAdjustStock(Medicine medicines[ARRAY_SIZE], int registerSize);
 void handlePartialSearch(Medicine medicines[ARRAY_SIZE], int registerSize);
+void handleRemoveMedicine(Medicine medicines[ARRAY_SIZE], int *registerSize);
 #endif

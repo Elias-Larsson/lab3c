@@ -99,6 +99,26 @@ void handlePrintMedicine(Medicine medicines[], int registerSize) {
     }
 }
 
+void handleRemoveMedicine(Medicine medicines[], int *registerSize) {
+    char input;
+    int i;
+    Medicine tmp;
+    
+    printf("Avregistrera \n");
+
+    int medicineIndex = searchMedicineIndex(medicines, *registerSize);
+
+    if (medicineIndex == -1) return;
+    printf("Vill du avregistrera %s (j/n)? ", medicines[medicineIndex].name);
+    scanf(" %c", &input);
+    if(input == 'j') {
+        for(i = medicineIndex; i < *registerSize-1; i++) {
+            medicines[i] = medicines[i+1];
+        }
+        (*registerSize)--;
+    }
+}
+
 void printMedicine(Medicine *medicine) {
     int i = 0;
      
@@ -117,7 +137,7 @@ void printMedicine(Medicine *medicine) {
     printf("\n");
 }
 
-bool medicineSearch(char query[], Medicine medicines[ARRAY_SIZE], int registerSize) {
+bool medicineSearch(char query[], Medicine medicines[], int registerSize) {
     for(int i = 0; i < registerSize; i++) {
         if(!strcmp(query, medicines[i].name)) {
             return true;
@@ -126,7 +146,7 @@ bool medicineSearch(char query[], Medicine medicines[ARRAY_SIZE], int registerSi
     return false;
 }
 
-bool medicinePartialSearch(char query[ARRAY_SIZE], int i, Medicine medicines[ARRAY_SIZE]) {
+bool medicinePartialSearch(char query[ARRAY_SIZE], int i, Medicine medicines[]) {
     if(strstr(medicines[i].name, query) != NULL) {
         return true;
     }

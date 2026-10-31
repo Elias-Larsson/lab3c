@@ -29,7 +29,6 @@ int main(void){
                "Varningar \n (8) Avsluta \n");
         scanf("%d", &menuInput);
         
-        if(menuInput == 8) break;
         switch (menuInput) {
             case 1: handleAddMedicine(medicines, &registerSize);
             break;
@@ -41,14 +40,19 @@ int main(void){
             break;
             case 5: handleAdjustStock(medicines, registerSize);
             break;
+            case 6: handleRemoveMedicine(medicines, &registerSize);
+            break;
+            case 7:
+            break;
+            case 8:
+                fp = fopen(file, "w");
+                if(fp != NULL) {
+                    printf("Programmet avslutar och skriver till filen: %s \n", file);
+                    writeToFile(fp, medicines, registerSize);
+                }
+            break;
         }
     }   
-    
-    fp = fopen(file, "w");
-    if(fp != NULL) {
-        printf("Programmet avslutar och skriver till filen: %s \n", file);
-        writeToFile(fp, medicines, registerSize);
-    }
 }
 
 void writeToFile(FILE *fp, Medicine medicines[ARRAY_SIZE], int registerSize) {
