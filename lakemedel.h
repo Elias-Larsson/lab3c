@@ -4,18 +4,16 @@
 #define ARRAY_SIZE 100
 #define MEDICINE_SIZE 10
 
-struct medicine {
-    int stock[MEDICINE_SIZE];
+typedef struct {
+    char name[21];
     int sizes[MEDICINE_SIZE];
+    int stock[MEDICINE_SIZE];
     int sizesCount;
-    char name[ARRAY_SIZE];
-};
-typedef struct medicine Medicine;
+} Medicine;
 
-void handleAddMedicine();
-void handlePrintMedicine();
-void writeMedicineToFile(FILE *fp);
-void handleAddSizes();
-void handleAdjustStock();
-void handlePartialSearch();
+void handleAddMedicine(Medicine medicines[ARRAY_SIZE], int *registerSize);
+void handlePrintMedicine(Medicine medicines[ARRAY_SIZE], int registerSize);
+void handleAddSizes(Medicine medicines[ARRAY_SIZE], int registerSize);
+void handleAdjustStock(Medicine medicines[ARRAY_SIZE], int registerSize);
+void handlePartialSearch(Medicine medicines[ARRAY_SIZE], int registerSize);
 #endif
