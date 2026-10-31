@@ -3,7 +3,7 @@
 #include <string.h>
 
 void writeToFile(FILE *fp, Medicine medicines[ARRAY_SIZE], int registerSize);
-void readFromFile(FILE *fp, Medicine medicines[ARRAY_SIZE], int registerSize);
+void readFromFile(FILE *fp, Medicine medicines[ARRAY_SIZE], int *registerSize);
 
 int main(void){
     FILE *fp;
@@ -15,13 +15,13 @@ int main(void){
     printf("Textfil: ");
     scanf("%99s", file);    
     fp = fopen(file, "r");
+
+    if(fp!=NULL) {
+        readFromFile(fp, medicines, &registerSize);
+        fclose(fp);
+        printf("%d lakemedel lasta fran fil. \n", registerSize);
+    } else printf("Fil saknas skapar en ny \n");
     
-    if(fp==NULL) {
-        printf("Fil saknas skapar en ny \n");
-        strcpy(file, "lakemedel.txt");
-    } else fclose(fp);
-    
-    fp = fopen(file, "w");
     while(1) {
         printf(" (1) Registrera nytt lakemedel \n (2) Skriva ut alla lakemedel \n "
                "(3) Soka efter lakemedel \n (4) Lagg till storlekar \n (5) Andra "
@@ -43,26 +43,49 @@ int main(void){
             break;
         }
     }   
+    
+    fp = fopen(file, "w");
+    if(fp != NULL) {
+        printf("Programmet avslutar och skriver till filen: %s \n", file);
         writeToFile(fp, medicines, registerSize);
+    }
 }
 
 void writeToFile(FILE *fp, Medicine medicines[ARRAY_SIZE], int registerSize) {
-    char name[ARRAY_SIZE];
-    
     for (int i = 0; i < registerSize; i++) {
-        if (medicines[i].name[0] == '\0') break;
-        fprintf(fp, "%s ", medicines[i].name);
-        
-        for(int j = 0; j < MEDICINE_SIZE; j++) {
-            if (medicines[i].sizes[j] == 0) break; 
-            fprintf(
-                fp, 
-                "%d %d ",
-                medicines[i].sizes[j],
-                medicines[i].stock[j]
-            );
+        fprintf(fp, "%s %d ", medicines[i].name, medicines[i].sizesCount);
+
+        for (int j = 0; j < medicines[i].sizesCount; j++) {
+            fprintf(fp, "%d %d ",
+                    medicines[i].sizes[j],
+                    medicines[i].stock[j]);
         }
+
         fprintf(fp, "\n");
     }
+
     fclose(fp);
+}
+
+void readFromFile(FILE *fp, Medicine medicines[ARRAY_SIZE], int *registerSize) {
+    int j, i = *registerSize;
+
+    while (i < ARRAY_SIZE &&
+           fscanf(fp, "%20s %d",
+                  medicines[i].name,
+                  &medicines[i].sizesCount) == 2) {
+            if (medicines[i].sizesCount < 0 || medicines[i].sizesCount > MEDICINE_SIZE) {
+                printf("Felaktigt antal storlekar i filen.\n");
+                break;
+            }
+        for (j = 0; j < medicines[i].sizesCount; j++) {
+            fscanf(fp, "%d %d",
+                   &medicines[i].sizes[j],
+                   &medicines[i].stock[j]);
+        }
+
+        i++;
+    }
+
+    *registerSize = i;
 }
