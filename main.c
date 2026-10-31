@@ -63,7 +63,6 @@ void writeToFile(FILE *fp, Medicine medicines[ARRAY_SIZE], int registerSize) {
 
         fprintf(fp, "\n");
     }
-
     fclose(fp);
 }
 
@@ -74,18 +73,18 @@ void readFromFile(FILE *fp, Medicine medicines[ARRAY_SIZE], int *registerSize) {
            fscanf(fp, "%20s %d",
                   medicines[i].name,
                   &medicines[i].sizesCount) == 2) {
-            if (medicines[i].sizesCount < 0 || medicines[i].sizesCount > MEDICINE_SIZE) {
-                printf("Felaktigt antal storlekar i filen.\n");
-                break;
-            }
+                      
+        if (medicines[i].sizesCount < 0 || medicines[i].sizesCount > MEDICINE_SIZE) {
+            printf("Felaktigt antal storlekar i filen. \n");
+            break;
+        }
+        
         for (j = 0; j < medicines[i].sizesCount; j++) {
             fscanf(fp, "%d %d",
                    &medicines[i].sizes[j],
                    &medicines[i].stock[j]);
         }
-
         i++;
     }
-
     *registerSize = i;
 }
