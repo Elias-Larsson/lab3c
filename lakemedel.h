@@ -1,7 +1,7 @@
 #ifndef LAKAMEDEL_H
 #define LAKAMEDEL_H
 #include <stdio.h>
-#define ARRAY_SIZE 100
+#define ARRAY_SIZE 1000
 #define MEDICINE_SIZE 10
 
 typedef struct {

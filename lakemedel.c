@@ -81,11 +81,12 @@ void handleAddMedicine(Medicine medicines[], int *registerSize) {
             printf("Lakemedlet finns redan\n");
         }
     }
-
+    medicines[*registerSize] = (Medicine){0};
+    
     strcpy(medicines[*registerSize].name, name);
-
+    
     addSizes(&medicines[*registerSize]);
-
+    
     (*registerSize)++;
 }
 
@@ -119,19 +120,19 @@ void handleRemoveMedicine(Medicine medicines[], int *registerSize) {
 }
 
 void handleStockWarnings(Medicine medicines[], int registerSize) {
-    char threshold;
+    int threshold;
     int stockWarning[MEDICINE_SIZE], count, j;
     
     printf("Varningar \n");
     printf("Under vilket saldo vill du ha varningar: ");
-    scanf(" %c", &threshold);
+    scanf(" %d", &threshold);
     printf("Foljande forpackningar har ett saldo under %d: ", threshold);
     printf("%-16s %-16s %s\n", "Lakemedel", "Storlekar", "Saldo");
     printf("_________________________________________\n");
     
     for(int i = 0; i < registerSize; i++) {
         count = 0;
-        for(j = 0; j < registerSize; j++) {
+        for(j = 0; j < medicines[i].sizesCount; j++) {
             if(medicines[i].stock[j] < threshold) {
                 stockWarning[count] = j;
                 count++;
@@ -176,7 +177,7 @@ void handleRemoveSizes(Medicine medicines[ARRAY_SIZE], int registerSize) {
                     medicine->sizes[j] = medicine->sizes[j+1];
                 }
                 medicine->sizesCount--;
-                printf("Storleken %d tas bort for %s. \n", medicine->sizes[i], medicine->name);
+                printf("Storleken %d tas bort for %s. \n", input, medicine->name);
                 return;
             }
         }
@@ -232,8 +233,7 @@ int searchMedicineIndex(Medicine medicines[], int registerSize) {
         count = 0;
 
         printf("Ange sokstrang: ");
-        if (scanf("%99s", query) != 1)
-            return -1;
+        scanf("%99s", query);
 
         for (int i = 0; i < registerSize; i++) {
             if (medicinePartialSearch(query, i, medicines)) {
@@ -253,14 +253,12 @@ int searchMedicineIndex(Medicine medicines[], int registerSize) {
 }
 
 void addSizes(Medicine *medicine) {
-    int i = 0;
-    
-    while (i < MEDICINE_SIZE) {
+    while (medicine->sizesCount < MEDICINE_SIZE) {
         printf("Ange storlek (0 för att avsluta): ");
         scanf("%d", &medicine->sizes[medicine->sizesCount]);
-        if(medicine->sizes[medicine->sizesCount] == 0) break;
+        if(medicine->sizes[medicine->sizesCount] == 0) return;
         
         medicine->sizesCount++;
-        i++;
     }
+    printf("Saknas plats for ytterligare storlek\n");
 }

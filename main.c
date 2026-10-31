@@ -52,7 +52,7 @@ int main(void){
                     printf("Programmet avslutar och skriver till filen: %s \n", file);
                     writeToFile(fp, medicines, registerSize);
                 }
-            break;
+            return 0;
         }
     }   
 }
