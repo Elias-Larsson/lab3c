@@ -156,6 +156,34 @@ void handleStockWarnings(Medicine medicines[], int registerSize) {
     }
 }
 
+void handleRemoveSizes(Medicine medicines[ARRAY_SIZE], int registerSize) {
+    int input;
+    int i, j;
+    
+    printf("Ta bort storlek \n");
+
+    int medicineIndex = searchMedicineIndex(medicines, registerSize);
+    if (medicineIndex == -1) return;
+    
+    Medicine *medicine = &medicines[medicineIndex];
+    while(1) {
+        printf("Ange storlek du vill ta bort: ");
+        scanf("%d", &input);
+        for(i = 0; i < medicine->sizesCount; i++) {
+            if(input == medicine->sizes[i]) { 
+                for(j = i; j < medicine->sizesCount-1; j++) {
+                    medicine->stock[j] = medicine->stock[j+1];
+                    medicine->sizes[j] = medicine->sizes[j+1];
+                }
+                medicine->sizesCount--;
+                printf("Storleken %d tas bort for %s. \n", medicine->sizes[i], medicine->name);
+                return;
+            }
+        }
+        printf("Den storleken finns ej.\n");
+    }
+}
+
 void printMedicine(Medicine *medicine) {
     int i = 0;
      

@@ -18,4 +18,5 @@ void handleAdjustStock(Medicine medicines[ARRAY_SIZE], int registerSize);
 void handlePartialSearch(Medicine medicines[ARRAY_SIZE], int registerSize);
 void handleRemoveMedicine(Medicine medicines[ARRAY_SIZE], int *registerSize);
 void handleStockWarnings(Medicine medicines[], int registerSize);
+void handleRemoveSizes(Medicine medicines[ARRAY_SIZE], int registerSize);
 #endif

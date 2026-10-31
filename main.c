@@ -23,10 +23,10 @@ int main(void){
     } else printf("Fil saknas skapar en ny \n");
     
     while(1) {
-        printf(" (1) Registrera nytt lakemedel \n (2) Skriva ut alla lakemedel \n "
+        printf("\n (1) Registrera nytt lakemedel \n (2) Skriva ut alla lakemedel \n "
                "(3) Soka efter lakemedel \n (4) Lagg till storlekar \n (5) Andra "
                "lagersaldot för ett lakemedel \n (6) Avregistrera lakemedel \n (7) "
-               "Varningar \n (8) Avsluta \n");
+               "Varningar \n (8) Ta bort storlekar \n (9) Avsluta \n");
         scanf("%d", &menuInput);
         
         switch (menuInput) {
@@ -44,7 +44,9 @@ int main(void){
             break;
             case 7: handleStockWarnings(medicines, registerSize);
             break;
-            case 8:
+            case 8: handleRemoveSizes(medicines, registerSize);
+            break;
+            case 9:
                 fp = fopen(file, "w");
                 if(fp != NULL) {
                     printf("Programmet avslutar och skriver till filen: %s \n", file);
