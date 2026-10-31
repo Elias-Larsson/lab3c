@@ -42,7 +42,7 @@ int main(void){
             break;
             case 6: handleRemoveMedicine(medicines, &registerSize);
             break;
-            case 7:
+            case 7: handleStockWarnings(medicines, registerSize);
             break;
             case 8:
                 fp = fopen(file, "w");

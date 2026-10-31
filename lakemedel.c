@@ -102,7 +102,6 @@ void handlePrintMedicine(Medicine medicines[], int registerSize) {
 void handleRemoveMedicine(Medicine medicines[], int *registerSize) {
     char input;
     int i;
-    Medicine tmp;
     
     printf("Avregistrera \n");
 
@@ -116,6 +115,44 @@ void handleRemoveMedicine(Medicine medicines[], int *registerSize) {
             medicines[i] = medicines[i+1];
         }
         (*registerSize)--;
+    }
+}
+
+void handleStockWarnings(Medicine medicines[], int registerSize) {
+    char threshold;
+    int stockWarning[MEDICINE_SIZE], count, j;
+    
+    printf("Varningar \n");
+    printf("Under vilket saldo vill du ha varningar: ");
+    scanf(" %c", &threshold);
+    printf("Foljande forpackningar har ett saldo under %d: ", threshold);
+    printf("%-16s %-16s %s\n", "Lakemedel", "Storlekar", "Saldo");
+    printf("_________________________________________\n");
+    
+    for(int i = 0; i < registerSize; i++) {
+        count = 0;
+        for(j = 0; j < registerSize; j++) {
+            if(medicines[i].stock[j] < threshold) {
+                stockWarning[count] = j;
+                count++;
+            }
+        }
+        
+        if(count != 0) {
+            printf("%-16s ", medicines[i].name);
+            j = 0;
+            while(j < count) {
+                printf("%d, ", medicines[i].sizes[stockWarning[j]]);
+                j++;
+            }
+            printf("%4s", " ");
+            j = 0;
+            while(j < count) {
+                printf("%d, ", medicines[i].stock[stockWarning[j]]);
+                j++;
+            }
+            printf("\n");
+        }
     }
 }
 
