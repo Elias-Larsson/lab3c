@@ -1,14 +1,14 @@
-#include "lakemedel.h"
+#include "handler.h"
 #include <stdio.h>
 #include <string.h>
 
-void writeToFile(FILE *fp, Medicine medicines[ARRAY_SIZE], int registerSize);
-void readFromFile(FILE *fp, Medicine medicines[ARRAY_SIZE], int *registerSize);
+void writeToFile(FILE *fp, Medicine medicines[MAX_MEDICINES], int registerSize);
+void readFromFile(FILE *fp, Medicine medicines[MAX_MEDICINES], int *registerSize);
 
 int main(void){
     FILE *fp;
-    char file[ARRAY_SIZE]; 
-    Medicine medicines[ARRAY_SIZE] = {0};
+    char file[MAX_MEDICINES]; 
+    Medicine medicines[MAX_MEDICINES] = {0};
     int registerSize = 0;
     int menuInput;
     
@@ -57,7 +57,7 @@ int main(void){
     }   
 }
 
-void writeToFile(FILE *fp, Medicine medicines[ARRAY_SIZE], int registerSize) {
+void writeToFile(FILE *fp, Medicine medicines[MAX_MEDICINES], int registerSize) {
     for (int i = 0; i < registerSize; i++) {
         fprintf(fp, "%s %d ", medicines[i].name, medicines[i].sizesCount);
 
@@ -72,23 +72,28 @@ void writeToFile(FILE *fp, Medicine medicines[ARRAY_SIZE], int registerSize) {
     fclose(fp);
 }
 
-void readFromFile(FILE *fp, Medicine medicines[ARRAY_SIZE], int *registerSize) {
+void readFromFile(FILE *fp, Medicine medicines[MAX_MEDICINES], int *registerSize) {
     int j, i = *registerSize;
 
-    while (i < ARRAY_SIZE &&
-           fscanf(fp, "%20s %d",
-                  medicines[i].name,
-                  &medicines[i].sizesCount) == 2) {
+    while (i < MAX_MEDICINES &&
+            fscanf(
+                fp, 
+                "%20s %d",
+                medicines[i].name,
+                &medicines[i].sizesCount) == 2) {
                       
-        if (medicines[i].sizesCount < 0 || medicines[i].sizesCount > MEDICINE_SIZE) {
+        if (medicines[i].sizesCount < 0 || medicines[i].sizesCount > MAX_SIZES) {
             printf("Felaktigt antal storlekar i filen. \n");
             break;
         }
         
         for (j = 0; j < medicines[i].sizesCount; j++) {
-            fscanf(fp, "%d %d",
-                   &medicines[i].sizes[j],
-                   &medicines[i].stock[j]);
+            fscanf(
+                fp, 
+                "%d %d",
+                &medicines[i].sizes[j],
+                &medicines[i].stock[j]
+            );
         }
         i++;
     }
