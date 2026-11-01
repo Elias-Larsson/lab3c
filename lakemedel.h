@@ -11,12 +11,12 @@ typedef struct {
     int sizesCount;
 } Medicine;
 
-void handleAddMedicine(Medicine medicines[ARRAY_SIZE], int *registerSize);
-void handlePrintMedicine(Medicine medicines[ARRAY_SIZE], int registerSize);
-void handleAddSizes(Medicine medicines[ARRAY_SIZE], int registerSize);
-void handleAdjustStock(Medicine medicines[ARRAY_SIZE], int registerSize);
-void handlePartialSearch(Medicine medicines[ARRAY_SIZE], int registerSize);
-void handleRemoveMedicine(Medicine medicines[ARRAY_SIZE], int *registerSize);
+void handleAddMedicine(Medicine medicines[], int *registerSize);
+void handlePrintMedicine(Medicine medicines[], int registerSize);
+void handleAddSizes(Medicine medicines[], int registerSize);
+void handleAdjustStock(Medicine medicines[], int registerSize);
+void handlePartialSearch(Medicine medicines[], int registerSize);
+void handleRemoveMedicine(Medicine medicines[], int *registerSize);
 void handleStockWarnings(Medicine medicines[], int registerSize);
-void handleRemoveSizes(Medicine medicines[ARRAY_SIZE], int registerSize);
+void handleRemoveSizes(Medicine medicines[], int registerSize);
 #endif

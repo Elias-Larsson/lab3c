@@ -5,9 +5,9 @@
 
 void addSizes(Medicine *medicine);
 void printMedicine(Medicine *medicine);
-bool medicineSearch(char query[], Medicine medicines[ARRAY_SIZE], int registerSize);
-bool medicinePartialSearch(char query[ARRAY_SIZE], int i, Medicine medicines[ARRAY_SIZE]);
-int searchMedicineIndex(Medicine medicines[ARRAY_SIZE], int registerSize);
+bool medicineSearch(char query[], Medicine medicines[], int registerSize);
+bool medicinePartialSearch(char query[], int i, Medicine medicines[]);
+int searchMedicineIndex(Medicine medicines[], int registerSize);
 
 void handleAdjustStock(Medicine medicines[], int registerSize) {
     int medicineIndex, adjustment;
@@ -126,7 +126,7 @@ void handleStockWarnings(Medicine medicines[], int registerSize) {
     printf("Varningar \n");
     printf("Under vilket saldo vill du ha varningar: ");
     scanf(" %d", &threshold);
-    printf("Foljande forpackningar har ett saldo under %d: ", threshold);
+    printf("Foljande forpackningar har ett saldo under %d:\n", threshold);
     printf("%-16s %-16s %s\n", "Lakemedel", "Storlekar", "Saldo");
     printf("_________________________________________\n");
     
@@ -253,11 +253,30 @@ int searchMedicineIndex(Medicine medicines[], int registerSize) {
 }
 
 void addSizes(Medicine *medicine) {
+    int size;
+    bool exists;
+
     while (medicine->sizesCount < MEDICINE_SIZE) {
         printf("Ange storlek (0 för att avsluta): ");
-        scanf("%d", &medicine->sizes[medicine->sizesCount]);
-        if(medicine->sizes[medicine->sizesCount] == 0) return;
+        scanf("%d", &size);
         
+        if (size == 0) return;
+        exists = false;
+
+        for (int i = 0; i < medicine->sizesCount; i++) {
+            if (medicine->sizes[i] == size) {
+                exists = true;
+                break;
+            }
+        }
+
+        if (exists) {
+            printf("Storleken finns redan.\n");
+            continue;
+        }
+
+        medicine->sizes[medicine->sizesCount] = size;
+        medicine->stock[medicine->sizesCount] = 0;
         medicine->sizesCount++;
     }
     printf("Saknas plats for ytterligare storlek\n");
