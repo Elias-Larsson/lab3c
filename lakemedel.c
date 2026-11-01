@@ -5,9 +5,9 @@
 
 void addSizes(Medicine *medicine);
 void printMedicine(Medicine *medicine);
-bool medicineSearch(char query[], Medicine medicines[], int registerSize);
-bool medicinePartialSearch(char query[], int i, Medicine medicines[]);
-int searchMedicineIndex(Medicine medicines[], int registerSize);
+bool medicineSearch(char query[], Medicine medicines[MAX_MEDICINES], int registerSize);
+bool medicinePartialSearch(char query[MAX_MEDICINES], int i, Medicine medicines[MAX_MEDICINES]);
+int searchMedicineIndex(Medicine medicines[MAX_MEDICINES], int registerSize);
 
 void handleAdjustStock(Medicine medicines[], int registerSize) {
     int medicineIndex, adjustment;
@@ -44,7 +44,7 @@ void handleAddSizes(Medicine medicines[], int registerSize) {
 }
 
 void handlePartialSearch(Medicine medicines[], int registerSize) {
-    char query[ARRAY_SIZE];
+    char query[MAX_MEDICINES];
 
     printf("Sok lakemedel\n");
     printf("Ange sokstrang: ");
@@ -64,7 +64,7 @@ void handleAddMedicine(Medicine medicines[], int *registerSize) {
     bool result = true;
     char name[100];
 
-    if (*registerSize >= ARRAY_SIZE) {
+    if (*registerSize >= MAX_MEDICINES) {
         printf("Registret ar fullt.\n");
         return;
     }
@@ -121,7 +121,7 @@ void handleRemoveMedicine(Medicine medicines[], int *registerSize) {
 
 void handleStockWarnings(Medicine medicines[], int registerSize) {
     int threshold;
-    int stockWarning[MEDICINE_SIZE], count, j;
+    int stockWarning[MAX_SIZES], count, j;
     
     printf("Varningar \n");
     printf("Under vilket saldo vill du ha varningar: ");
@@ -157,7 +157,7 @@ void handleStockWarnings(Medicine medicines[], int registerSize) {
     }
 }
 
-void handleRemoveSizes(Medicine medicines[ARRAY_SIZE], int registerSize) {
+void handleRemoveSizes(Medicine medicines[MAX_MEDICINES], int registerSize) {
     int input;
     int i, j;
     
@@ -212,7 +212,7 @@ bool medicineSearch(char query[], Medicine medicines[], int registerSize) {
     return false;
 }
 
-bool medicinePartialSearch(char query[ARRAY_SIZE], int i, Medicine medicines[]) {
+bool medicinePartialSearch(char query[MAX_MEDICINES], int i, Medicine medicines[]) {
     if(strstr(medicines[i].name, query) != NULL) {
         return true;
     }
@@ -222,7 +222,7 @@ bool medicinePartialSearch(char query[ARRAY_SIZE], int i, Medicine medicines[]) 
 int searchMedicineIndex(Medicine medicines[], int registerSize) {
     int medicineIndex = -1;
     int count;
-    char query[ARRAY_SIZE];
+    char query[MAX_MEDICINES];
 
     if (registerSize == 0) {
         printf("Inga lakemedel registrerade.\n");
@@ -256,11 +256,12 @@ void addSizes(Medicine *medicine) {
     int size;
     bool exists;
 
-    while (medicine->sizesCount < MEDICINE_SIZE) {
+    while (medicine->sizesCount < MAX_SIZES) {
         printf("Ange storlek (0 för att avsluta): ");
         scanf("%d", &size);
-        
-        if (size == 0) return;
+
+        if (size == 0)return;
+
         exists = false;
 
         for (int i = 0; i < medicine->sizesCount; i++) {

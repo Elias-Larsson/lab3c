@@ -1,13 +1,13 @@
 #ifndef LAKAMEDEL_H
 #define LAKAMEDEL_H
 #include <stdio.h>
-#define ARRAY_SIZE 1000
-#define MEDICINE_SIZE 10
+#define MAX_MEDICINES 1000
+#define MAX_SIZES 10
 
 typedef struct {
     char name[21];
-    int sizes[MEDICINE_SIZE];
-    int stock[MEDICINE_SIZE];
+    int sizes[MAX_SIZES];
+    int stock[MAX_SIZES];
     int sizesCount;
 } Medicine;
 
